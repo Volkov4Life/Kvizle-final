@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1076624736092",
+    "project_id": "kvizle-c9594",
+    "storage_bucket": "kvizle-c9594.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076624736092:android:fdf99623b8b99484938b99",
+        "android_client_info": {
+          "package_name": "com.company.kvizle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZCfutR91Xu3hfTr38LgC-EJq2Us4zQik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
