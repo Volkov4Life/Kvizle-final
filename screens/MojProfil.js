@@ -34,8 +34,8 @@ export default function MojProfil({ navigation }) {
             stTock: userDoc.stTock || 0,
             email: userDoc.email || '',
             uporabniskoIme: userDoc.uporabniskoIme || '',
-            WR: Math.round(userDoc.WR * 100)|| 0, // Add Win Rate (default to 0 if not found)
-            gamesPlayed: userDoc.gamesPlayed || 0, // Add Games Played (default to 0 if not found)
+            WR: Math.round(userDoc.WR * 100)|| 0, 
+            gamesPlayed: userDoc.gamesPlayed || 0, 
           });
         } else {
           console.error('Uporabnik ni bil najden.');
@@ -83,10 +83,10 @@ export default function MojProfil({ navigation }) {
         <Text style={styles.label}>Točke:</Text>
         <Text style={styles.value}>{userData.stTock}</Text>
 
-        <Text style={styles.label}>Win Rate (WR):</Text>
+        <Text style={styles.label}>Točnost:</Text>
         <Text style={styles.value}>{userData.WR}%</Text>
 
-        <Text style={styles.label}>Število Iger Igranih:</Text>
+        <Text style={styles.label}>Število igranih iger:</Text>
         <Text style={styles.value}>{userData.gamesPlayed}</Text>
       </View>
 
