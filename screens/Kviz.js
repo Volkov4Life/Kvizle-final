@@ -137,6 +137,7 @@ export default function Kviz({ route, navigation }) {
     } else {
       const NovoStIger = stIger + 1;
       setStIger(NovoStIger);
+      ZapisiPodatkeVBazo(0,streak,0,0);
       setLives((prevLives) => prevLives - 1);
       nastaviVprasanje("geografska")
       if (lives - 1 <= 0) {
