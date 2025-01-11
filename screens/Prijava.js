@@ -61,7 +61,10 @@ export default function Prijava({ navigation }) {
           email: userCredential.user.email,
           uporabniskoIme: uporabniskoIme,
           stTock: 0,
-          maxStreak: 0
+          maxStreak: 0,
+          gamesPlayed: 0,
+          WR: 0,
+          stZmag: 0
         });
         console.log('User data saved to Firestore');
         

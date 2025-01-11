@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, SafeAreaView } from 'r
 import { Ionicons } from '@expo/vector-icons';
 import { firestore } from '../firebaseConfig'; 
 import { getFirestore, collection, getDocs, query, where } from "firebase/firestore"; 
+import { IzracunajStTock, ZapisiPodatkeVBazo } from "../streakLogic"
 
 export default function Kviz({ route, navigation }) {
   const { gamemode, difficulty } = route.params;
@@ -14,6 +15,10 @@ export default function Kviz({ route, navigation }) {
   const [correctIndex, setCorrectIndex] = useState(5);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [lives, setLives] = useState(difficulty === "Hard" ? 1 : 3);
+  const [currentTocke, setCurrentTocke] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [stIger, setStIger] = useState(0);
+  const [stZmag, setStZmag] = useState(0);
   const db = getFirestore(); 
 
 
@@ -72,6 +77,12 @@ export default function Kviz({ route, navigation }) {
       console.log("No questions found for the selected difficulty.");
     }
   };
+  useEffect(() => {
+    console.log("Current Streak:", streak);
+    console.log("Current Tocke:", currentTocke);
+    console.log("Current stIger:", stIger);
+    console.log("Current stZmag:", stZmag);
+  }, [streak, currentTocke, stIger, stZmag]);
 
   useEffect(() => {
     switch (gamemode) {
@@ -104,22 +115,35 @@ export default function Kviz({ route, navigation }) {
     ]);
   };
 
-  const handleSubmitAnswer = () => {
+  const handleSubmitAnswer = async () => {
     if (selectedAnswer == null) {
       return;
     }
     if (selectedAnswer == correctIndex) {
-      console.log("JAA ZMAGAL");
+      const newStreak = streak + 1; 
+      setStreak(newStreak);
+  
+      const newTocke = currentTocke + await IzracunajStTock(difficulty, newStreak); 
+      setCurrentTocke(newTocke);
+
+      const NovoStZmag = stZmag + 1;
+      setStZmag(NovoStZmag);
+
+      const NovoStIger = stIger + 1;
+      setStIger(NovoStIger);
+
       setSelectedAnswer(null);
       nastaviVprasanje("geografska"); // Call the function again to load a new question
     } else {
-      console.log("SI ZGUBU");
+      const NovoStIger = stIger + 1;
+      setStIger(NovoStIger);
       setLives((prevLives) => prevLives - 1);
       nastaviVprasanje("geografska")
       if (lives - 1 <= 0) {
-        console.log("Game over");
+        ZapisiPodatkeVBazo(currentTocke, streak, stZmag, stIger+1)
         navigation.navigate('Igre');
       }
+      setStreak(0);
     }
   };
 
