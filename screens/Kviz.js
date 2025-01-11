@@ -115,6 +115,7 @@ export default function Kviz({ route, navigation }) {
     } else {
       console.log("SI ZGUBU");
       setLives((prevLives) => prevLives - 1);
+      nastaviVprasanje("geografska")
       if (lives - 1 <= 0) {
         console.log("Game over");
         navigation.navigate('Igre');
