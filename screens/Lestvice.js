@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { firestore } from '../firebaseConfig';
+
 
 export default function Lestvice({ navigation }) {
-  //Primer
-  const leaderboardData = [
-    { username: 'Player1', score: 100 },
-    { username: 'Player2', score: 90 },
-    { username: 'Player3', score: 80 },
-    { username: 'Player4', score: 70 },
-    { username: 'Player5', score: 60 },
-    { username: 'Player6', score: 50 },
-    { username: 'Player7', score: 40 },
-    { username: 'Player8', score: 30 },
-    { username: 'Player9', score: 20 },
-    { username: 'Player10', score: 10 },
-  ];
+  const [leaderboardData, setLeaderboardData] = useState([]);
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const q = query(collection(firestore, 'users'), orderBy('stTock', 'desc'), limit(10));
+        const querySnapshot = await getDocs(q);
+
+        const data = [];
+        querySnapshot.forEach((doc) => {
+          const { uporabniskoIme, stTock } = doc.data();
+          data.push({ username: uporabniskoIme || '', score: stTock || 0 });
+        });
+
+        // Ensure the leaderboard has exactly 10 entries
+        while (data.length < 10) {
+          data.push({ username: '', score: 0 });
+        }
+
+        setLeaderboardData(data);
+      } catch (error) {
+        console.error('Napaka z lestvico:', error);
+      }
+    };
+
+    fetchLeaderboard();
+  }, []);
+
 
   const userPoints = 0; //Primer
 

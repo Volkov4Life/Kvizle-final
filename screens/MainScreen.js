@@ -33,7 +33,7 @@ export default function MainScreen({ navigation }) {
           <Text style={styles.buttonText}>Lestvice</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleNastavitve}>
-          <Text style={styles.buttonText}>Nastavitve</Text>
+          <Text style={styles.buttonText}>Moj profil</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handlePrijava}>
           <Text style={styles.buttonText}>Prijava</Text>
