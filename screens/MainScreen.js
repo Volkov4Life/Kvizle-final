@@ -28,13 +28,13 @@ export default function MainScreen({ navigation }) {
     navigation.navigate('Lestvice');
   };
 
-  const handleNastavitve = () => {
+  const handleMojProfil = () => {
     if (!isLoggedIn) return Alert.alert('Access Denied', 'You must log in to access this feature.');
-    console.log('Nastavitve pressed');
+    navigation.navigate("MojProfil");
   };
 
   const handlePrijava = () => {
-    navigation.navigate('Prijava'); // Prijava screen bo mal drugacen prly
+    navigation.navigate('Prijava');
   };
 
   return (
@@ -48,7 +48,7 @@ export default function MainScreen({ navigation }) {
         <TouchableOpacity style={styles.button} onPress={handleLestvice}>
           <Text style={styles.buttonText}>Lestvice</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleNastavitve}>
+        <TouchableOpacity style={styles.button} onPress={handleMojProfil}>
           <Text style={styles.buttonText}>Moj profil</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handlePrijava}>

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, limit, where } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
-
+import { getAuth } from 'firebase/auth';
 
 export default function Lestvice({ navigation }) {
   const [leaderboardData, setLeaderboardData] = useState([]);
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  const [userPoints, setUserPoints] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -34,8 +38,30 @@ export default function Lestvice({ navigation }) {
     fetchLeaderboard();
   }, []);
 
+  useEffect(() => {
+    const fetchUserPoints = async () => {
+      if (currentUser) {
+        try {
+          const usersRef = collection(firestore, 'users');
+          const q = query(usersRef, where('email', '==', currentUser.email));
+          const querySnapshot = await getDocs(q);
 
-  const userPoints = 0; //Primer
+          if (!querySnapshot.empty) {
+            const userData = querySnapshot.docs[0].data();
+            setUserPoints(userData.stTock || 0); 
+          }
+        } catch (error) {
+          console.error('Error fetching user points:', error);
+        } finally {
+          setLoading(false); 
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+
+    fetchUserPoints();
+  }, [currentUser]);
 
   const renderItem = ({ item, index }) => {
     let rowStyle = styles.defaultRow;
@@ -163,7 +189,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     left: 20,
-    backgroundColor: 'rgb(255, 127, 80)', // Tomato
+    backgroundColor: 'rgb(255, 127, 80)',
     padding: 10,
     borderRadius: 8,
   },

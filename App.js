@@ -7,19 +7,13 @@ import Igre from './screens/Igre';
 import Kviz from './screens/Kviz';
 import Prijava from './screens/Prijava';
 import Lestvice from './screens/Lestvice';
+import MojProfil from './screens/MojProfil';
 //import { firebase } from '@react-native-firebase/app';
 
 
 const Stack = createStackNavigator();
 
 export default function App() {
-
-    /*useEffect(() => {
-      if (!firebase.apps.length) {
-        firebase.initializeApp();
-      }
-    }, []); */
-
 
   return (
     <NavigationContainer>
@@ -29,6 +23,7 @@ export default function App() {
         <Stack.Screen name="Kviz" component={Kviz} options={{headerShown: false}}/>
         <Stack.Screen name="Prijava" component={Prijava}/>
         <Stack.Screen name="Lestvice" component={Lestvice} options={{headerShown: false}}/>
+        <Stack.Screen name="MojProfil" component={MojProfil} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
