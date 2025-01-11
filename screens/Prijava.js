@@ -59,7 +59,9 @@ export default function Prijava({ navigation }) {
         const userRef = doc(firestore, 'users', userCredential.user.uid); // Using user uid as document ID
         await setDoc(userRef, {
           email: userCredential.user.email,
-          uporabniskoIme: uporabniskoIme
+          uporabniskoIme: uporabniskoIme,
+          stTock: 0,
+          maxStreak: 0
         });
         console.log('User data saved to Firestore');
         
