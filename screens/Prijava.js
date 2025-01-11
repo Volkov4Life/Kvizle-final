@@ -1,19 +1,77 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { auth, firestore } from '../firebaseConfig'; // Make sure firestore is imported from firebaseConfig
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore'; // Firestore methods
 
 export default function Prijava({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [uporabniskoIme, setUporabniskoIme] = useState('');
 
   const handleLogin = () => {
     if (!email || !password) {
       Alert.alert('Napaka', 'Izpolni oboje.');
       return;
     }
-
     console.log('Email:', email);
     console.log('Password:', password);
-    // Add authentication logic here
+
+    const testAuth = async () => {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email, 
+          password
+        );
+        console.log("User signed in successfully:", userCredential.user);
+        Alert.alert("Success", `User signed in: ${userCredential.user.email}`);
+      } catch (error) {
+        console.error("Error during authentication:", error.message);
+        Alert.alert("Error", error.message);
+      }
+    };
+
+    testAuth();
+
+    navigation.navigate('MainScreen');
+  };
+
+  const handleSignIn = () => {
+    if (!email || !password || !uporabniskoIme) {
+      Alert.alert('Napaka', 'Izpolni vse podatke.');
+      return;
+    }
+    console.log('Email:', email);
+    console.log('Password:', password);
+    console.log('Uporabniško ime:', uporabniskoIme);
+
+    const testAuth = async () => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email, 
+          password
+        );
+        console.log("User created successfully:", userCredential.user);
+
+        // Now write the user's email and uporabniskoIme to Firestore
+        const userRef = doc(firestore, 'users', userCredential.user.uid); // Using user uid as document ID
+        await setDoc(userRef, {
+          email: userCredential.user.email,
+          uporabniskoIme: uporabniskoIme
+        });
+        console.log('User data saved to Firestore');
+        
+        Alert.alert("Success", `User created and data saved: ${userCredential.user.email}`);
+      } catch (error) {
+        console.error("Error during authentication:", error.message);
+        Alert.alert("Error", error.message);
+      }
+    };
+
+    testAuth();
+
     navigation.navigate('MainScreen');
   };
 
@@ -39,9 +97,19 @@ export default function Prijava({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry
       />
+      <TextInput
+        style={styles.input}
+        placeholder="Uporabniško ime"
+        placeholderTextColor="#888"
+        value={uporabniskoIme}
+        onChangeText={setUporabniskoIme}
+      />
 
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Vpis</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginButton} onPress={handleSignIn}>
+        <Text style={styles.loginButtonText}>Nov Račun</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => Alert.alert('Pozabljeno geslo?', 'Nastavitev novega gesla pride kmalu')}>

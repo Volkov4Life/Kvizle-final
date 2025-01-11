@@ -1,13 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
+
 
 export default function MainScreen({ navigation }) {
+  
+
   const handleIgraj = () => {
     navigation.navigate('Igre');
   };
 
   const handleLestvice = () => {
-    navigation.navigate('Lestvice')
+    navigation.navigate('Lestvice');
   };
 
   const handleNastavitve = () => {
@@ -15,7 +18,7 @@ export default function MainScreen({ navigation }) {
   };
 
   const handlePrijava = () => {
-    navigation.navigate('Prijava'); //Prijava screen bo mal drugacen prly
+    navigation.navigate('Prijava'); // Prijava screen bo mal drugacen prly
   };
 
   return (
