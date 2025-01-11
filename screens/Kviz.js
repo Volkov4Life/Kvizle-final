@@ -133,7 +133,7 @@ export default function Kviz({ route, navigation }) {
       setStIger(NovoStIger);
 
       setSelectedAnswer(null);
-      nastaviVprasanje("geografska"); // Call the function again to load a new question
+      nastaviVprasanje("geografska");
     } else {
       const NovoStIger = stIger + 1;
       setStIger(NovoStIger);
@@ -157,6 +157,11 @@ export default function Kviz({ route, navigation }) {
         {Array.from({ length: lives }).map((_, index) => (
           <Ionicons key={index} name="heart" size={24} color="red" />
         ))}
+      </View>
+
+      <View style={styles.textBoxContainer}>
+        <Text style={styles.textBox}>TOČKE: {currentTocke}</Text>
+        <Text style={styles.textBox}>Streak: {streak}</Text>
       </View>
 
       <View style={styles.questionContainer}>
@@ -203,6 +208,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 15,
+  },
+  textBoxContainer: {
+    marginTop: 10, // Ensure there is space between hearts and text boxes
+    marginBottom: 20, // Space between the text boxes and the quiz content
+  },
+  textBox: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
+    marginBottom: 10, // Adds space between TOČKE and Streak text boxes
   },
   endQuizText: {
     color: 'white',
