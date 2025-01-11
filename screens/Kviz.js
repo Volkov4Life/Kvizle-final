@@ -89,11 +89,11 @@ export default function Kviz({ route, navigation }) {
       case 'Geografija':
         nastaviVprasanje("geografska");
         break;
-      case 'Zgodovina':
-        // Handle history
+      case 'Reke':
+        nastaviVprasanje("reke");
         break;
-      case 'Mesano':
-        // Handle mixed mode
+      case 'Osebe':
+        nastaviVprasanje("osebe");
         break;
       default:
         console.log('Unknown gamemode selected');
@@ -133,13 +133,21 @@ export default function Kviz({ route, navigation }) {
       setStIger(NovoStIger);
 
       setSelectedAnswer(null);
-      nastaviVprasanje("geografska");
+
+
+      if (gamemode == "Geografija") nastaviVprasanje("geografska");
+      if (gamemode == "Reke") nastaviVprasanje("reke");
+      if (gamemode == "Osebe") nastaviVprasanje("osebe");
+
     } else {
       const NovoStIger = stIger + 1;
       setStIger(NovoStIger);
       ZapisiPodatkeVBazo(0,streak,0,0);
       setLives((prevLives) => prevLives - 1);
-      nastaviVprasanje("geografska")
+      if (gamemode == "Geografija") nastaviVprasanje("geografska");
+      if (gamemode == "Reke") nastaviVprasanje("reke");
+      if (gamemode == "Osebe") nastaviVprasanje("osebe");
+
       if (lives - 1 <= 0) {
         ZapisiPodatkeVBazo(currentTocke, streak, stZmag, stIger+1)
         navigation.navigate('Igre');

@@ -47,11 +47,11 @@ export default function Igre({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={() => navigateToKviz('Geografija')}>
         <Text style={styles.buttonText}>Geografija</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.color2]} onPress={() => navigateToKviz('Zgodovina')}>
-        <Text style={styles.buttonText}>Zgodovina</Text>
+      <TouchableOpacity style={[styles.button, styles.color2]} onPress={() => navigateToKviz('Reke')}>
+        <Text style={styles.buttonText}>Reke</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.color3]} onPress={() => navigateToKviz('Mesano')}>
-        <Text style={styles.buttonText}>Mešano</Text>
+      <TouchableOpacity style={[styles.button, styles.color3]} onPress={() => navigateToKviz('Osebe')}>
+        <Text style={styles.buttonText}>Osebe</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
