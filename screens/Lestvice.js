@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { collection, getDocs, query, orderBy, limit, where } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
 import { getAuth } from 'firebase/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Lestvice({ navigation }) {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -103,7 +104,7 @@ export default function Lestvice({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Najboljši igralci</Text>
 
       <FlatList
@@ -119,7 +120,7 @@ export default function Lestvice({ navigation }) {
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>Nazaj</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
