@@ -20,13 +20,17 @@ export default function Lestvice({ navigation }) {
 
         const data = [];
         querySnapshot.forEach((doc) => {
-          const { uporabniskoIme, stTock } = doc.data();
-          data.push({ username: uporabniskoIme || '', score: stTock || 0 });
+          const { uporabniskoIme, stTock, WR } = doc.data();
+          data.push({
+            username: uporabniskoIme || '',
+            score: stTock || 0,
+            winRate: Math.round(WR * 100)|| 0,
+          });
         });
 
         // Ensure the leaderboard has exactly 10 entries
         while (data.length < 10) {
-          data.push({ username: '', score: 0 });
+          data.push({ username: '', score: 0, winRate: 0 });
         }
 
         setLeaderboardData(data);
@@ -48,12 +52,12 @@ export default function Lestvice({ navigation }) {
 
           if (!querySnapshot.empty) {
             const userData = querySnapshot.docs[0].data();
-            setUserPoints(userData.stTock || 0); 
+            setUserPoints(userData.stTock || 0);
           }
         } catch (error) {
           console.error('Error fetching user points:', error);
         } finally {
-          setLoading(false); 
+          setLoading(false);
         }
       } else {
         setLoading(false);
@@ -67,7 +71,7 @@ export default function Lestvice({ navigation }) {
     let rowStyle = styles.defaultRow;
     let textStyle = styles.defaultText;
 
-    // top 3
+    // Highlight the top 3 players
     if (index === 0) {
       rowStyle = styles.goldRow;
       textStyle = styles.goldText;
@@ -84,7 +88,8 @@ export default function Lestvice({ navigation }) {
         <Text style={[styles.username, textStyle]}>
           {index + 1}. {item.username}
         </Text>
-        <Text style={[styles.score, textStyle]}>{item.score}</Text>
+        <Text style={[styles.score, textStyle]}>Točke: {item.score}</Text>
+        <Text style={[styles.score, textStyle]}>Zmage: {item.winRate}%</Text>
         {index < 3 && (
           <FontAwesome
             name="star"
@@ -171,7 +176,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   score: {
-    fontSize: 18,
+    fontSize: 16,
+    marginHorizontal: 5,
   },
   starIcon: {
     marginLeft: 10,
