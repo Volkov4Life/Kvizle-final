@@ -1,41 +1,41 @@
 import React from 'react';
-import { View, Button, StyleSheet, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
 export default function MainScreen({ navigation }) {
+  const handleIgraj = () => {
+    navigation.navigate('Igre');
+  };
 
-    const handleGeografija = () => navigation.navigate("Geografija");
+  const handleLestvice = () => {
+    navigation.navigate('Lestvice')
+  };
 
-    const handleZgodovina = () => {
-        
-    }
+  const handleNastavitve = () => {
+    console.log('Nastavitve pressed');
+  };
 
-    const handleSlovenci = () => {
-        
-    }
-
-    const handleTODO = () => {
-        
-    }
-
-
+  const handlePrijava = () => {
+    navigation.navigate('Prijava'); //Prijava screen bo mal drugacen prly
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={{color: "rgb(255, 127, 80)", fontFamily: "fantasy", marginTop: "4%", fontWeight: "bold", fontSize: 50}} numberOfLines={1}>Kvizle</Text>
-      
-      <TouchableOpacity style={styles.button} onPress={handleGeografija}>
-        <Text style={styles.buttonText}>Geografija</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleZgodovina}>
-        <Text style={styles.buttonText}>Zgodovina</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleSlovenci}>
-        <Text style={styles.buttonText}>Slovenci</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleTODO}>
-        <Text style={styles.buttonText}>TODO</Text>
-      </TouchableOpacity>
-      
+      <Text style={styles.title}>Kvizle</Text>
+    
+      <View style={styles.card}>
+        <TouchableOpacity style={styles.button} onPress={handleIgraj}>
+          <Text style={styles.buttonText}>Igraj</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleLestvice}>
+          <Text style={styles.buttonText}>Lestvice</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleNastavitve}>
+          <Text style={styles.buttonText}>Nastavitve</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handlePrijava}>
+          <Text style={styles.buttonText}>Prijava</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -43,23 +43,41 @@ export default function MainScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'rgb(127, 255, 212)',
     alignItems: 'center',
-    backgroundColor: "rgb(127, 255, 212)",
-    color: "rgb(255, 127, 80)",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: 'rgb(255, 127, 80)',
+    fontFamily: 'fantasy',
+    marginBottom: "50%",
+    textAlign: 'center',
+    marginTop: 50
+  },
+  card: {
+    backgroundColor: 'rgb(254,216,192)',
+    borderRadius: 20,
+    padding: 20,
+    width: '90%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5, // For Android shadow
   },
   button: {
-    borderRadius: 10,
-    overflow: "hidden",
     backgroundColor: 'rgb(255, 127, 80)',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 10,
-    marginTop: 15,
+    marginVertical: 10,
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
