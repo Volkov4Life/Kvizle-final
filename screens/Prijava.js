@@ -38,7 +38,7 @@ export default function Prijava({ navigation }) {
   };
 
   const handleSignIn = () => {
-    if (!email || !password || !uporabniskoIme) {
+    if (!email || !password || !uporabniskoIme || password.length < 6) {
       Alert.alert('Napaka', 'Izpolni vse podatke.');
       return;
     }
