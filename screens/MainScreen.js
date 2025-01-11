@@ -1,19 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
+import { onAuthStateChanged, getAuth } from 'firebase/auth'; // Import Firebase auth
+
+
 
 
 export default function MainScreen({ navigation }) {
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user); // Update state based on user authentication
+    });
+
+    return () => unsubscribe(); // Clean up the subscription
+  }, []);
 
   const handleIgraj = () => {
+    if (!isLoggedIn) return Alert.alert('Access Denied', 'You must log in to access this feature.');
+    console.log("prijavljen")
     navigation.navigate('Igre');
   };
 
   const handleLestvice = () => {
+    if (!isLoggedIn) return Alert.alert('Access Denied', 'You must log in to access this feature.');
     navigation.navigate('Lestvice');
   };
 
   const handleNastavitve = () => {
+    if (!isLoggedIn) return Alert.alert('Access Denied', 'You must log in to access this feature.');
     console.log('Nastavitve pressed');
   };
 
